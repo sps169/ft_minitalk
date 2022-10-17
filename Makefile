@@ -6,7 +6,8 @@ SERVER_SRC_DIR = ./src/server/
 
 LIBFT_LIB = ./lib/libftprintf.a
 
-CLIENT_SRC =	$(CLIENT_SRC_DIR)client_main.c
+CLIENT_SRC =	$(CLIENT_SRC_DIR)client_main.c		\
+				$(CLIENT_SRC_DIR)client_functions.c
 
 SERVER_SRC =	$(SERVER_SRC_DIR)server_main.c
 
