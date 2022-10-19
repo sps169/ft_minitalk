@@ -6,7 +6,7 @@
 /*   By: sperez-s <sperez-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 09:23:37 by sperez-s          #+#    #+#             */
-/*   Updated: 2022/10/17 12:25:45 by sperez-s         ###   ########.fr       */
+/*   Updated: 2022/10/19 17:09:59 by sperez-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,14 @@
 
 # include "ft_printf.h"
 # include <signal.h>
+
+typedef struct s_gvars
+{
+	size_t		received;
+	size_t	size;
+	char	curr_char;
+	char	*message;
+}	t_gvars;
 
 int	send_string_to_server(char *message, int pid);
 
