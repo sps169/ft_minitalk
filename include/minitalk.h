@@ -6,7 +6,7 @@
 /*   By: sperez-s <sperez-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 09:23:37 by sperez-s          #+#    #+#             */
-/*   Updated: 2022/10/19 17:09:59 by sperez-s         ###   ########.fr       */
+/*   Updated: 2022/10/25 10:23:36 by sperez-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 
 typedef struct s_gvars
 {
-	size_t		received;
+	size_t	received;
 	size_t	size;
 	char	curr_char;
 	char	*message;
