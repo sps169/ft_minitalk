@@ -6,12 +6,11 @@
 /*   By: sperez-s <sperez-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 11:31:37 by sperez-s          #+#    #+#             */
-/*   Updated: 2022/10/25 10:23:07 by sperez-s         ###   ########.fr       */
+/*   Updated: 2022/10/26 15:25:17 by sperez-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
-#include <stdio.h>
 
 static int	send_char_to_server(unsigned char c, int pid)
 {
