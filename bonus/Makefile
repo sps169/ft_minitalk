@@ -4,12 +4,12 @@ SERVER_NAME = server
 CLIENT_SRC_DIR = ./src/client/
 SERVER_SRC_DIR = ./src/server/
 
-LIBFT_LIB = ./lib/libftprintf.a
+LIBFT_LIB = .././lib/libftprintf.a
 
-CLIENT_SRC =	$(CLIENT_SRC_DIR)client_main.c		\
-				$(CLIENT_SRC_DIR)client_functions.c
+CLIENT_SRC =	$(CLIENT_SRC_DIR)client_main_bonus.c		\
+				$(CLIENT_SRC_DIR)client_functions_bonus.c
 
-SERVER_SRC =	$(SERVER_SRC_DIR)server_main.c
+SERVER_SRC =	$(SERVER_SRC_DIR)server_main_bonus.c
 
 CLIENT_OBJS = $(CLIENT_SRC:.c=.o)
 SERVER_OBJS = $(SERVER_SRC:.c=.o)
@@ -28,28 +28,22 @@ all: $(CLIENT_NAME) $(SERVER_NAME)
 CSANITIZE = -fsanitize=address -g3
 
 $(CLIENT_NAME): $(LIBFT_LIB) $(CLIENT_OBJS)
-	$(CC) $(CFLAGS) $(INCLUDE) -L./lib/ -lftprintf $(CLIENT_OBJS) -o $(CLIENT_NAME)
+	$(CC) $(CFLAGS) $(INCLUDE) -L.././lib/ -lftprintf $(CLIENT_OBJS) -o $(CLIENT_NAME)
 
 $(SERVER_NAME): $(LIBFT_LIB) $(SERVER_OBJS)
-	$(CC) $(CFLAGS) $(INCLUDE) -L./lib/ -lftprintf $(SERVER_OBJS) -o $(SERVER_NAME)
+	$(CC) $(CFLAGS) $(INCLUDE) -L.././lib/ -lftprintf $(SERVER_OBJS) -o $(SERVER_NAME)
 
 $(LIBFT_LIB):
-	make -C lib
+	make -C ../lib
 
-bonus: $(CLIENT_NAME) $(SERVER_NAME)
-	make -C bonus
-	mv bonus/$(CLIENT_NAME) .
-	mv bonus/$(SERVER_NAME) .
 
 clean:
-	make -C lib clean
-	make -C bonus clean
+	make -C ../lib clean
 	rm -f $(CLIENT_OBJS)
 	rm -f $(SERVER_OBJS)
 
 fclean: clean
-	make -C lib fclean
-	make -C bonus fclean
+	make -C ../lib fclean
 	rm -f $(CLIENT_NAME)
 	rm -f $(SERVER_NAME)
 
