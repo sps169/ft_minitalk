@@ -9,7 +9,8 @@ LIBFT_LIB = .././lib/libftprintf.a
 CLIENT_SRC =	$(CLIENT_SRC_DIR)client_main_bonus.c		\
 				$(CLIENT_SRC_DIR)client_functions_bonus.c
 
-SERVER_SRC =	$(SERVER_SRC_DIR)server_main_bonus.c
+SERVER_SRC =	$(SERVER_SRC_DIR)server_main_bonus.c			\
+				$(SERVER_SRC_DIR)server_signal_handler_bonus.c
 
 CLIENT_OBJS = $(CLIENT_SRC:.c=.o)
 SERVER_OBJS = $(SERVER_SRC:.c=.o)
@@ -35,7 +36,6 @@ $(SERVER_NAME): $(LIBFT_LIB) $(SERVER_OBJS)
 
 $(LIBFT_LIB):
 	make -C ../lib
-
 
 clean:
 	make -C ../lib clean

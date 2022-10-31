@@ -6,16 +6,26 @@
 /*   By: sperez-s <sperez-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 09:26:24 by sperez-s          #+#    #+#             */
-/*   Updated: 2022/10/26 16:28:01 by sperez-s         ###   ########.fr       */
+/*   Updated: 2022/10/31 12:25:04 by sperez-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk_bonus.h"
 
+void	signal_handler(int signal)
+{
+	if (signal == SIGUSR1)
+		ft_printf("");
+	else
+		ft_printf("");
+}
+
 int	main(int argc, char *argv[])
 {
 	int	pid;
 
+	signal(SIGUSR1, signal_handler);
+	signal(SIGUSR2, signal_handler);
 	if (argc == 3)
 	{
 		pid = ft_atoi(argv[1]);

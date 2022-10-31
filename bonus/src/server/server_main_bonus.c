@@ -6,7 +6,7 @@
 /*   By: sperez-s <sperez-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 09:26:21 by sperez-s          #+#    #+#             */
-/*   Updated: 2022/10/26 16:28:00 by sperez-s         ###   ########.fr       */
+/*   Updated: 2022/10/31 12:44:59 by sperez-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,12 @@ void	handle_size(int signal)
 	{
 		g_vars.size <<= 1;
 		g_vars.size += 1;
+		g_vars.last_signal = SIGUSR1;
 	}
 	else if (signal == SIGUSR2)
 	{
 		g_vars.size <<= 1;
+		g_vars.last_signal = SIGUSR2;
 	}
 }
 
@@ -47,8 +49,10 @@ void	handle_message(int signal)
 		g_vars.message[g_vars.size] = 0;
 }
 
-void	signal_handler(int signal)
+void	signal_handler(int signal, siginfo_t* info, void* vp)
 {
+	(void)vp;
+	g_vars.client_pid = info->si_pid;
 	if (g_vars.received < 32)
 		handle_size(signal);
 	else
@@ -58,32 +62,39 @@ void	signal_handler(int signal)
 	{
 		g_vars.message = malloc((g_vars.size + 1) * sizeof(char));
 		if (g_vars.message == NULL)
-			exit(-1);
+			return ;
 	}
 }
 
 void	reset_vars(void)
 {
 	g_vars.received = 0;
+	g_vars.sent = 0;
 	g_vars.curr_char = 0;
 	g_vars.size = 0;
 	g_vars.message = NULL;
+	g_vars.client_pid = 0;
+	g_vars.last_signal = 0;
 }
 
 int	main(void)
 {
 	ft_printf("Server PID: %u\n", getpid());
-	signal(SIGUSR1, signal_handler);
-	signal(SIGUSR2, signal_handler);
+	setup_signal(SIGUSR1, signal_handler, SA_SIGINFO);
+	setup_signal(SIGUSR2, signal_handler, SA_SIGINFO);
 	while (1)
 	{
-		if (g_vars.received >= 32 && (g_vars.size * 8) + 32 == g_vars.received)
+		if (g_vars.received != g_vars.sent)
+		{
+			send_signal(g_vars.last_signal, g_vars.client_pid, !(g_vars.received >= 32 && (g_vars.size * 8) + 32 == g_vars.received));
+			g_vars.sent++;
+		}
+		else if (g_vars.received >= 32 && (g_vars.size * 8) + 32 == g_vars.received)
 		{	
 			ft_printf("%s\n", g_vars.message);
 			free(g_vars.message);
 			reset_vars();
-		}	
-		pause();
+		}
 	}
 	return (0);
 }
