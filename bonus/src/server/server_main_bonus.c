@@ -6,7 +6,7 @@
 /*   By: sperez-s <sperez-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 09:26:21 by sperez-s          #+#    #+#             */
-/*   Updated: 2022/10/31 12:44:59 by sperez-s         ###   ########.fr       */
+/*   Updated: 2022/11/02 12:50:17 by sperez-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	handle_message(int signal)
 		g_vars.message[(g_vars.received - 32) / 8] = g_vars.curr_char;
 		g_vars.curr_char = 0;
 	}
-	if (g_vars.received == g_vars.size * 8 + 32)
+	if (g_vars.received + 1 == g_vars.size * 8 + 32)
 		g_vars.message[g_vars.size] = 0;
 }
 
@@ -62,7 +62,12 @@ void	signal_handler(int signal, siginfo_t* info, void* vp)
 	{
 		g_vars.message = malloc((g_vars.size + 1) * sizeof(char));
 		if (g_vars.message == NULL)
-			return ;
+			exit(-1);
+	}
+	if (g_vars.received != g_vars.sent)
+	{
+		while(!send_signal(g_vars.last_signal, g_vars.client_pid));
+		g_vars.sent++;
 	}
 }
 
@@ -84,17 +89,13 @@ int	main(void)
 	setup_signal(SIGUSR2, signal_handler, SA_SIGINFO);
 	while (1)
 	{
-		if (g_vars.received != g_vars.sent)
-		{
-			send_signal(g_vars.last_signal, g_vars.client_pid, !(g_vars.received >= 32 && (g_vars.size * 8) + 32 == g_vars.received));
-			g_vars.sent++;
-		}
-		else if (g_vars.received >= 32 && (g_vars.size * 8) + 32 == g_vars.received)
+		if (g_vars.received >= 32 && (g_vars.size * 8) + 32 == g_vars.received)
 		{	
 			ft_printf("%s\n", g_vars.message);
 			free(g_vars.message);
 			reset_vars();
 		}
+		pause();
 	}
 	return (0);
 }

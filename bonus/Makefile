@@ -1,5 +1,5 @@
-CLIENT_NAME = client
-SERVER_NAME = server
+CLIENT_NAME = b_client
+SERVER_NAME = b_server
 
 CLIENT_SRC_DIR = ./src/client/
 SERVER_SRC_DIR = ./src/server/
@@ -22,6 +22,10 @@ CFLAGS = -Wextra -Wall -Werror
 CC = gcc
 
 all: $(CLIENT_NAME) $(SERVER_NAME)
+
+client: $(CLIENT_NAME)
+
+server: $(SERVER_NAME)
 
 .c.o:
 	$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@

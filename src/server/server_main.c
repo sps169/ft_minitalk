@@ -6,7 +6,7 @@
 /*   By: sperez-s <sperez-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 09:26:21 by sperez-s          #+#    #+#             */
-/*   Updated: 2022/10/25 10:22:46 by sperez-s         ###   ########.fr       */
+/*   Updated: 2022/11/02 11:40:13 by sperez-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	handle_message(int signal)
 		g_vars.message[(g_vars.received - 32) / 8] = g_vars.curr_char;
 		g_vars.curr_char = 0;
 	}
-	if (g_vars.received == g_vars.size * 8 + 32)
+	if (g_vars.received + 1 == g_vars.size * 8 + 32)
 		g_vars.message[g_vars.size] = 0;
 }
 

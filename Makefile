@@ -1,6 +1,9 @@
 CLIENT_NAME = client
 SERVER_NAME = server
 
+CLIENT_NAME_BONUS = b_client
+SERVER_NAME_BONUS = b_server
+
 CLIENT_SRC_DIR = ./src/client/
 SERVER_SRC_DIR = ./src/server/
 
@@ -36,10 +39,17 @@ $(SERVER_NAME): $(LIBFT_LIB) $(SERVER_OBJS)
 $(LIBFT_LIB):
 	make -C lib
 
-bonus: $(CLIENT_NAME) $(SERVER_NAME)
-	make -C bonus
-	mv bonus/$(CLIENT_NAME) .
-	mv bonus/$(SERVER_NAME) .
+$(CLIENT_NAME_BONUS): 
+	make -C bonus client
+	cp bonus/$(CLIENT_NAME_BONUS) .
+	rm bonus/$(CLIENT_NAME_BONUS)
+
+$(SERVER_NAME_BONUS):
+	make -C bonus server
+	cp bonus/$(SERVER_NAME_BONUS) .
+	rm bonus/$(SERVER_NAME_BONUS)
+
+bonus: $(CLIENT_NAME_BONUS) $(SERVER_NAME_BONUS)
 
 clean:
 	make -C lib clean
@@ -52,6 +62,8 @@ fclean: clean
 	make -C bonus fclean
 	rm -f $(CLIENT_NAME)
 	rm -f $(SERVER_NAME)
+	rm -f $(CLIENT_NAME_BONUS)
+	rm -f $(SERVER_NAME_BONUS)
 
 re: fclean all
 

@@ -6,7 +6,7 @@
 /*   By: sperez-s <sperez-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 09:23:37 by sperez-s          #+#    #+#             */
-/*   Updated: 2022/10/31 12:44:12 by sperez-s         ###   ########.fr       */
+/*   Updated: 2022/11/02 12:28:22 by sperez-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,6 @@ int	send_string_to_server(char *message, int pid);
 
 int	setup_signal(int sig, void (*h)(int, siginfo_t*, void*), int options);
 
-int	send_signal(int signal, int pid, int wait);
+int	send_signal(int signal, int pid);
 
 #endif
