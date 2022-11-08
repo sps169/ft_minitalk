@@ -6,7 +6,7 @@
 /*   By: sperez-s <sperez-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 09:26:21 by sperez-s          #+#    #+#             */
-/*   Updated: 2022/11/02 12:50:17 by sperez-s         ###   ########.fr       */
+/*   Updated: 2022/11/08 13:55:42 by sperez-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,10 @@ void	handle_size(int signal)
 	{
 		g_vars.size <<= 1;
 		g_vars.size += 1;
-		g_vars.last_signal = SIGUSR1;
 	}
 	else if (signal == SIGUSR2)
 	{
 		g_vars.size <<= 1;
-		g_vars.last_signal = SIGUSR2;
 	}
 }
 
@@ -53,21 +51,22 @@ void	signal_handler(int signal, siginfo_t* info, void* vp)
 {
 	(void)vp;
 	g_vars.client_pid = info->si_pid;
-	if (g_vars.received < 32)
-		handle_size(signal);
-	else
-		handle_message(signal);
-	g_vars.received++;
+	g_vars.last_signal = signal;
 	if (g_vars.received == 32)
 	{
 		g_vars.message = malloc((g_vars.size + 1) * sizeof(char));
 		if (g_vars.message == NULL)
 			exit(-1);
 	}
-	if (g_vars.received != g_vars.sent)
+	if (g_vars.received < 32)
 	{
-		while(!send_signal(g_vars.last_signal, g_vars.client_pid));
-		g_vars.sent++;
+		handle_size(signal);
+		g_vars.received++;
+	}
+	else if (g_vars.received >= 32 && (g_vars.size * 8) + 32 > g_vars.received)
+	{	
+		handle_message(signal);
+		g_vars.received++;
 	}
 }
 
@@ -89,6 +88,11 @@ int	main(void)
 	setup_signal(SIGUSR2, signal_handler, SA_SIGINFO);
 	while (1)
 	{
+		if (g_vars.client_pid != 0)
+		{
+			g_vars.sent++;
+			send_signal(g_vars.last_signal, g_vars.client_pid);
+		}
 		if (g_vars.received >= 32 && (g_vars.size * 8) + 32 == g_vars.received)
 		{	
 			ft_printf("%s\n", g_vars.message);
