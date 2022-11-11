@@ -6,7 +6,7 @@
 /*   By: sperez-s <sperez-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 09:23:37 by sperez-s          #+#    #+#             */
-/*   Updated: 2022/11/02 12:28:22 by sperez-s         ###   ########.fr       */
+/*   Updated: 2022/11/11 13:17:51 by sperez-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,10 @@ typedef struct s_gvars
 	int		last_signal;
 }	t_gvars;
 
-int	send_string_to_server(char *message, int pid);
+int		send_string_to_server(char *message, int pid);
 
-int	setup_signal(int sig, void (*h)(int, siginfo_t*, void*), int options);
+int		setup_signal(int sig, void (*h)(int, siginfo_t*, void*), int options);
 
-int	send_signal(int signal, int pid);
+void	send_signal(int signal, int pid);
 
 #endif

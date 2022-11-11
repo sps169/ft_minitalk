@@ -6,7 +6,7 @@
 /*   By: sperez-s <sperez-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 09:12:04 by sperez-s          #+#    #+#             */
-/*   Updated: 2022/11/08 13:54:54 by sperez-s         ###   ########.fr       */
+/*   Updated: 2022/11/11 13:42:34 by sperez-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,17 +26,18 @@ int	setup_signal(int sig, void (*h)(int, siginfo_t *, void *), int options)
 	return (r);
 }
 
-int	send_signal(int signal, int pid)
+void	send_signal(int signal, int pid)
 {
 	if (signal == SIGUSR1)
 	{	
+		usleep(100);
 		while (kill(pid, SIGUSR1)== -1)
 			usleep(10);
 	}
 	else if (signal == SIGUSR2)
 	{	
+		usleep(100);
 		while (kill(pid, SIGUSR2)== -1)
 			usleep(10);
 	}
-	return (1);
 }
