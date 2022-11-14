@@ -7,12 +7,21 @@ SERVER_NAME_BONUS = b_server
 CLIENT_SRC_DIR = ./src/client/
 SERVER_SRC_DIR = ./src/server/
 
+CLIENT_SRC_BONUS_DIR = ./bonus/src/client/
+SERVER_SRC_BONUS_DIR = ./bonus/src/server/
+
 LIBFT_LIB = ./lib/libftprintf.a
 
 CLIENT_SRC =	$(CLIENT_SRC_DIR)client_main.c		\
 				$(CLIENT_SRC_DIR)client_functions.c
 
 SERVER_SRC =	$(SERVER_SRC_DIR)server_main.c
+
+CLIENT_BONUS_SRC =	$(CLIENT_SRC_BONUS_DIR)client_main_bonus.c		\
+				$(CLIENT_SRC_BONUS_DIR)client_functions_bonus.c
+
+SERVER_BONUS_SRC =	$(SERVER_SRC_BONUS_DIR)server_main_bonus.c				\
+					$(SERVER_SRC_BONUS_DIR)server_signal_handler_bonus.c
 
 CLIENT_OBJS = $(CLIENT_SRC:.c=.o)
 SERVER_OBJS = $(SERVER_SRC:.c=.o)
@@ -39,12 +48,12 @@ $(SERVER_NAME): $(LIBFT_LIB) $(SERVER_OBJS)
 $(LIBFT_LIB):
 	make -C lib
 
-$(CLIENT_NAME_BONUS): 
+$(CLIENT_NAME_BONUS): $(CLIENT_BONUS_SRC)
 	make -C bonus client
 	cp bonus/$(CLIENT_NAME_BONUS) .
 	rm bonus/$(CLIENT_NAME_BONUS)
 
-$(SERVER_NAME_BONUS):
+$(SERVER_NAME_BONUS): $(SERVER_BONUS_SRC)
 	make -C bonus server
 	cp bonus/$(SERVER_NAME_BONUS) .
 	rm bonus/$(SERVER_NAME_BONUS)
@@ -68,6 +77,6 @@ fclean: clean
 re: fclean all
 
 norme: 
-	norminette -R CheckForbiddenSourcesHeader
+	norminette -R CheckForbiddenSourcesHeader .
 
 .PHONY: all clean fclean re norme

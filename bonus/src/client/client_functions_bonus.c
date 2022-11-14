@@ -6,7 +6,7 @@
 /*   By: sperez-s <sperez-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 11:31:37 by sperez-s          #+#    #+#             */
-/*   Updated: 2022/11/11 13:43:15 by sperez-s         ###   ########.fr       */
+/*   Updated: 2022/11/14 11:57:13 by sperez-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,20 +22,17 @@ static int	send_char_to_server(unsigned char c, int pid)
 	{
 		if ((c >> i) & 1)
 		{
-			// ft_printf("Presignal\n");
 			usleep(100);
 			while (kill(pid, SIGUSR1) == -1)
 				usleep(100);
 		}
 		else
 		{
-			// ft_printf("Presignal\n");
 			usleep(100);
 			while (kill(pid, SIGUSR2) == -1)
 				usleep(100);
 		}
 		pause();
-		// ft_printf("Post signal: %i\n", i);
 		i--;
 	}
 	ft_printf("\n");
@@ -52,20 +49,17 @@ int	send_size_to_server(size_t size, int pid)
 	{
 		if ((size >> (31 - bits)) & 1)
 		{
-			// ft_printf("Presignal\n");
 			usleep(100);
 			while (kill(pid, SIGUSR1) == -1)
 				usleep(100);
 		}
 		else
 		{
-			// ft_printf("Presignal\n");
 			usleep(100);
 			while (kill(pid, SIGUSR2) == -1)
 				usleep(100);
 		}
 		pause();
-		// ft_printf("Post signal: %i\n", bits);
 		bits++;
 	}
 	ft_printf("\n");

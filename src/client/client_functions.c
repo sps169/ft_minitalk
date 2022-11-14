@@ -6,7 +6,7 @@
 /*   By: sperez-s <sperez-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 11:31:37 by sperez-s          #+#    #+#             */
-/*   Updated: 2022/11/02 11:53:28 by sperez-s         ###   ########.fr       */
+/*   Updated: 2022/11/14 12:10:00 by sperez-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,15 @@ static int	send_char_to_server(unsigned char c, int pid)
 	{
 		if ((c >> i) & 1)
 		{
+			usleep(100);
 			if (kill(pid, SIGUSR1) == -1)
 				return (0);
-			usleep(100);
 		}
 		else
 		{
+			usleep(100);
 			if (kill(pid, SIGUSR2) == -1)
 				return (0);
-			usleep(100);
 		}
 		i--;
 	}
@@ -45,15 +45,15 @@ int	send_size_to_server(size_t size, int pid)
 	{
 		if ((size >> (31 - bits)) & 1)
 		{
+			usleep(100);
 			if (kill(pid, SIGUSR1) == -1)
 				return (-1);
-			usleep(100);
 		}
 		else
 		{
+			usleep(100);
 			if (kill(pid, SIGUSR2) == -1)
 				return (-1);
-			usleep(100);
 		}
 		bits++;
 	}

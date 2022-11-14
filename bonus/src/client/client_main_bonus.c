@@ -6,7 +6,7 @@
 /*   By: sperez-s <sperez-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 09:26:24 by sperez-s          #+#    #+#             */
-/*   Updated: 2022/11/11 13:29:11 by sperez-s         ###   ########.fr       */
+/*   Updated: 2022/11/14 12:05:01 by sperez-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,10 @@
 
 void	signal_handler(int signal)
 {
-	// ft_printf("Handler start");
 	if (signal == SIGUSR1)
 		ft_printf("1");
 	else
 		ft_printf("0");
-	// ft_printf("Handler end\n")
 }
 
 int	main(int argc, char *argv[])
